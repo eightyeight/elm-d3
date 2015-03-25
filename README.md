@@ -92,8 +92,10 @@ selectAll "path"
 is equlivalent to
 
 ```javascript
-d3.selectAll("path")
-  .data(cells)
+function (data) {
+  d3.selectAll("path")
+    .data(cells(data))
+}
 ```
 
 Sequencing is another operation that's slightly different in elm-d3. In Javascript,
@@ -103,15 +105,17 @@ variable. In place of sequencing, you would use the `|-` infix operator. Its
 use is illustrated in the example above. You can see the equivalent code in JavaScript below.
 
 ```javascript
-var path = d3.selectAll('path')
-    .bind(function(d) { ... });
+var voronoi = function(data) {
+  var path = d3.selectAll('path')
+    .data(cells(data));
 
-path.enter()
-  .append('path');
+  path.enter()
+    .append('path');
 
-path
+  path
     .attr('d', function(d) { ... })
     .attr('class', function(d) { ... });
+}
 ```
 
 [core]: https://github.com/mbostock/d3/wiki/Selections
